@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Minesweeper</string>
+    <string name="welcome"><b>Welcome to Minesweeper</b></string>
+    <string name="author">Mateusz Sendorek AGH</string>
+    <string name="play_button">Play</string>
+    <string name="rank_button">Player Ranking</string>
+    <string name="button_4x4">Play 4x4 with 4 bombs</string>
+    <string name="button_5x5">Play 5x5 with 7 bombs</string>
+    <string name="button_7x7">Play 7x7 with 13 bombs</string>
+    <string name="choose_size"><b>Choose standard game board:</b></string>
+    <string name="rank_head">Top 10 %1$s times</string>
+    <string name="rank_nick">%1$d. %2$s</string>
+    <string name="rank_4x4"><b>Top 10 4x4 times</b></string>
+    <string name="rank_5x5"><b>Top 10 5x5 times</b></string>
+    <string name="rank_7x7"><b>Top 10 7x7 times</b></string>
+    <string name="good_luck">Good Luck!</string>
+    <string name="reset_button">Restart</string>
+    <string name="empty"> </string>
+    <string name="timer">Time= 0.00s</string>
+    <string name="give_name">Enter your nickname</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="enter">Enter name here</string>
+    <string name="about_button">About</string>
+    <string name="play_custom">Play custom game</string>
+    <string name="config_custom"><b>Configure your custom game:</b></string>
+    <string name="board_width">Board width: %1$d </string>
+    <string name="board_height">Board height: %1$d </string>
+    <string name="bombs_number">Number of bombs: %1$d </string>
+    <string name="increment">Increment</string>
+    <string name="decrement">Decrement</string>
+    <string name="about_howtoplay"><b>How to play:</b>\nThe goal of the game is to correctly mark all fields where the bombs are and uncover all number fields. Each field on the board is either a bomb or number field, which displays amount of bombs in 8 nearby fields.\n\n<b>Controls:</b>\nTap on empty field to uncover it. Be careful, if you click on the bomb, it will explode.\nTap and hold on empty field to mark it as a bomb. Holding on number field will uncover nearby fields if the bombs around it are correctly marked. However if they are not - unmarked bomb will explode. </string>
+    <string name="about_author"><b>Author:</b>\nThis app has been developed by Mateusz Sendorek as a project for Object Oriented Programming course at AGH UST.</string>
+</resources>
