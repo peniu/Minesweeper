@@ -15,10 +15,6 @@ public class Play_menu extends AppCompatActivity implements View.OnClickListener
     private int height;
     private int width;
     private int bombs;
-    // maximum height and width are determined by the reasonable size of a single
-    // play field, while maximum amount of bombs is height times width
-    private int MAX_HEIGHT = 9;
-    private int MAX_WIDTH = 8;
     private int MAX_BOMBS;
     private TextView height_view;
     private TextView width_view;
@@ -35,24 +31,24 @@ public class Play_menu extends AppCompatActivity implements View.OnClickListener
         bombs = configPref.getInt("CUSTOM_BOMBS", 7);
         MAX_BOMBS = height*width;
         // adding custom game settings to textviews
-        height_view = (TextView)findViewById(R.id.height_view);
+        height_view = findViewById(R.id.height_view);
         height_view.setText(getString(R.string.board_height,height));
-        width_view = (TextView)findViewById(R.id.width_view);
+        width_view = findViewById(R.id.width_view);
         width_view.setText(getString(R.string.board_width,width));
-        bombs_view = (TextView)findViewById(R.id.bombs_view);
+        bombs_view = findViewById(R.id.bombs_view);
         bombs_view.setText(getString(R.string.bombs_number,bombs));
         // setting listeners for buttons
-        ImageButton but1 = (ImageButton)findViewById(R.id.bombs_decrement);
+        ImageButton but1 = findViewById(R.id.bombs_decrement);
         but1.setOnClickListener(this);
-        ImageButton but2 = (ImageButton)findViewById(R.id.bombs_increment);
+        ImageButton but2 = findViewById(R.id.bombs_increment);
         but2.setOnClickListener(this);
-        ImageButton but3 = (ImageButton)findViewById(R.id.width_decrement);
+        ImageButton but3 = findViewById(R.id.width_decrement);
         but3.setOnClickListener(this);
-        ImageButton but4 = (ImageButton)findViewById(R.id.width_increment);
+        ImageButton but4 = findViewById(R.id.width_increment);
         but4.setOnClickListener(this);
-        ImageButton but5 = (ImageButton)findViewById(R.id.height_decrement);
+        ImageButton but5 = findViewById(R.id.height_decrement);
         but5.setOnClickListener(this);
-        ImageButton but6 = (ImageButton)findViewById(R.id.height_increment);
+        ImageButton but6 = findViewById(R.id.height_increment);
         but6.setOnClickListener(this);
     }
 
@@ -91,8 +87,13 @@ public class Play_menu extends AppCompatActivity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        // method changes properties of custom game, when buttons are used
-        // there are limits on each parameter
+        /*
+        method changes properties of custom game, when buttons are used
+        there are limits on each parameter, maximum height and width
+        are determined by the reasonable size of a single play field
+        */
+        int MAX_HEIGHT = 9;
+        int MAX_WIDTH = 8;
         switch (v.getId() /*to get clicked view id**/) {
             case R.id.height_decrement:
                 if(height>1){

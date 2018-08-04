@@ -19,6 +19,14 @@ import java.util.TimerTask;
 
 public class Play extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
 
+    /*
+    TODO -> display icons with boom and sad smiley in Uncover() method
+    TODO -> add icons for restart button, mark bomb
+    TODO (?) -> make/find icons for fields with 1-8 numbers
+    TODO -> rewrite remaining polish comments into english
+    TODO -> revise mechanics of the game
+    */
+
     SharedPreferences sharedPref;
     private int BOARD_WIDTH;
     private int BOARD_HEIGHT;
@@ -34,6 +42,7 @@ public class Play extends AppCompatActivity implements View.OnClickListener, Vie
     private int[] toCheckifzero;
     private int[] checked;
     private boolean standard=false;
+    private boolean timer_started=false;
     private String type;
 
     @Override
@@ -60,7 +69,6 @@ public class Play extends AppCompatActivity implements View.OnClickListener, Vie
             standard = true;
             type = "7x7";
         }
-        // method which creates layout with given parameters
         createLayout(BOARD_HEIGHT,BOARD_WIDTH);
         fields_number = BOARD_HEIGHT*BOARD_WIDTH;
         // initialization of arrays used for the mechanics of the game
@@ -77,25 +85,9 @@ public class Play extends AppCompatActivity implements View.OnClickListener, Vie
             field_labels[i] = 0;
         }
         prepareBoard();
-        // timer and updating textview showing time over game field
-        result=0;
-        T = new Timer();
-        text_timer = (TextView)findViewById(R.id.ttimer);
-        T.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        int seconds = result/100;
-                        int decimals = (result%100)/10;
-                        int hundredths = (result%100)%10;
-                        text_timer.setText("Time= "+seconds+"."+decimals+hundredths+"s");
-                    }
-                });
-                result++;
-            }
-        }, 500, 10);
+        timer_started=false;
+        text_timer = findViewById(R.id.ttimer);
+        text_timer.setText(getString(R.string.timer,0,0,0));
     }
 
     @Override
@@ -107,6 +99,11 @@ public class Play extends AppCompatActivity implements View.OnClickListener, Vie
             exit = 1;
             T.cancel();
             recreate();
+        }
+        else if (!timer_started){
+            // starts the timer when user taps on field other than restart button
+            startTimer();
+            timer_started=true;
         }
         //sprawdza czy zero, jesli tak to sprawdza czy okoliczne to zera
         //itd do momentu gdy nie nastapi zadna zmiana w tablicy toCheckifzero
@@ -224,9 +221,10 @@ public class Play extends AppCompatActivity implements View.OnClickListener, Vie
     }
 
     private void createLayout(int HEIGHT,int WIDTH){
+        // method which creates layout with given parameters
         // Creating table layout
         TableLayout table;
-        table = (TableLayout) findViewById(R.id.view_root);
+        table = findViewById(R.id.view_root);
 
         // Adding buttons to the board
         int i=0;
@@ -243,7 +241,7 @@ public class Play extends AppCompatActivity implements View.OnClickListener, Vie
                 row.addView(b);
             }
         }
-        Button restart_button = (Button)findViewById(R.id.res_button);
+        Button restart_button = findViewById(R.id.res_button);
         restart_button.setOnClickListener(this);
     }
 
@@ -315,14 +313,12 @@ public class Play extends AppCompatActivity implements View.OnClickListener, Vie
         }
     }
 
-    //RECREATE TO EDIT UNCOVER
     private void Uncover (int nr) {
-        Button b = (Button)findViewById(nr);
+        Button b = findViewById(nr);
         if (field_labels[nr] == 9) {
             //czyli na tym przycisku byla bomba -> game over, od nowa lecimy
             b.setText("*");
             T.cancel();
-            //recreate();
         }
         else {
             //tzn ze pole z numerkiem -> wyswietlamy numerek
@@ -341,7 +337,7 @@ public class Play extends AppCompatActivity implements View.OnClickListener, Vie
         //wg field_labels to albo otwieramy pozostale pola (jesli byly dobrze oznaczone wszystkie)
         //albo wybuchamy (jesli chociaz 1 bomba byla zle oznaczona lub za duzo bomb oznaczono)
         //jesli nie ma oznaczonych wystarczajaco bomb -> nic nie robimy
-        Button b = (Button)findViewById(nr);
+        Button b = findViewById(nr);
         if(guesses[nr]==1){
             int[] teOdkryj = new int[8];
             for(int i=0;i<8;i++){
@@ -503,9 +499,9 @@ public class Play extends AppCompatActivity implements View.OnClickListener, Vie
         int seconds = score/100;
         int decimals = (score%100)/10;
         int hundredths = (score%100)%10;
-        text_timer=(TextView)findViewById(R.id.ttimer);
+        text_timer=findViewById(R.id.ttimer);
         String time = seconds+"."+decimals+hundredths+"s";
-        text_timer.setText("Time= "+time);
+        text_timer.setText(getString(R.string.timer,seconds,decimals,hundredths));
 
         //dialog pytajacy o nick przy wygranej i dostaniu sie do TOP 10 w standardowej grze
         final int Rank = CheckRank(score);
@@ -546,19 +542,11 @@ public class Play extends AppCompatActivity implements View.OnClickListener, Vie
     private boolean CheckWin(){
         int win_flag=0;
         for (int i = 0; i < fields_number; i++) {
-            if ((guesses[i] == 999 && field_labels[i] == 9) || (guesses[i] == 1 && field_labels[i] != 9)) {
-
-            }
-            else {
+            if ((guesses[i] != 999 || field_labels[i] != 9) && (guesses[i] != 1 || field_labels[i] == 9)) {
                 win_flag++;
             }
         }
-        if (win_flag == 0) {
-            return true;
-        }
-        else{
-            return false;
-        }
+        return win_flag == 0;
     }
 
     private int CheckRank(int score){
@@ -595,4 +583,24 @@ public class Play extends AppCompatActivity implements View.OnClickListener, Vie
         editor.apply();
     }
 
+    private void startTimer(){
+        // starting timer and updating text view showing time over game field
+        T = new Timer();
+        text_timer = findViewById(R.id.ttimer);
+        T.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        int seconds = result/100;
+                        int decimals = (result%100)/10;
+                        int hundredths = (result%100)%10;
+                        text_timer.setText(getString(R.string.timer,seconds,decimals,hundredths));
+                    }
+                });
+                result++;
+            }
+        }, 0, 10);
+    }
 }

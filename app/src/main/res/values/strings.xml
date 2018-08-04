@@ -8,17 +8,18 @@
     <string name="button_5x5">Play 5x5 with 7 bombs</string>
     <string name="button_7x7">Play 7x7 with 13 bombs</string>
     <string name="choose_size"><b>Choose standard game board:</b></string>
-    <string name="rank_head">Top 10 %1$s times</string>
+    <string name="rank_head"><b>Top 10 %1$s times</b></string>
     <string name="rank_nick">%1$d. %2$s</string>
+    <string name="rank_time">%1$d.%2$d%3$ds</string>
     <string name="rank_4x4"><b>Top 10 4x4 times</b></string>
     <string name="rank_5x5"><b>Top 10 5x5 times</b></string>
     <string name="rank_7x7"><b>Top 10 7x7 times</b></string>
     <string name="good_luck">Good Luck!</string>
     <string name="reset_button">Restart</string>
     <string name="empty"> </string>
-    <string name="timer">Time= 0.00s</string>
+    <string name="timer">Time= %1$d.%2$d%3$ds</string>
     <string name="give_name">Enter your nickname</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="enter">Enter name here</string>
     <string name="about_button">About</string>

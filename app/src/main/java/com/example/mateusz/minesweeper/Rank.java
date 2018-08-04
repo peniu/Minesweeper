@@ -44,7 +44,7 @@ public class Rank extends AppCompatActivity {
             int seconds = high_scores[r]/100;
             int decimals = (high_scores[r]%100)/10;
             int hundredths = (high_scores[r]%100)%10;
-            t2.setText(seconds+"."+decimals+hundredths+"s");
+            t2.setText(getString(R.string.rank_time,seconds,decimals,hundredths));
             TableRow.LayoutParams params = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
             params.weight = 1.0f;
             params.gravity = Gravity.END;
@@ -63,4 +63,5 @@ public class Rank extends AppCompatActivity {
             nicks[i]= sharedPref.getString(type+"_NICK_"+i,"Janek");
         }
     }
+
 }
