@@ -20,8 +20,7 @@ import java.util.TimerTask;
 public class Play extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
 
     /*
-    TODO -> display icons with boom and sad smiley in Uncover() method
-    TODO -> add icons for restart button, mark bomb
+    TODO -> display icons boom and flag
     TODO (?) -> make/find icons for fields with 1-8 numbers
     TODO -> rewrite remaining polish comments into english
     TODO -> revise mechanics of the game
@@ -86,6 +85,7 @@ public class Play extends AppCompatActivity implements View.OnClickListener, Vie
         }
         prepareBoard();
         timer_started=false;
+        T = new Timer();
         text_timer = findViewById(R.id.ttimer);
         text_timer.setText(getString(R.string.timer,0,0,0));
     }
@@ -319,6 +319,8 @@ public class Play extends AppCompatActivity implements View.OnClickListener, Vie
             //czyli na tym przycisku byla bomba -> game over, od nowa lecimy
             b.setText("*");
             T.cancel();
+            Button r = findViewById(R.id.res_button);
+            r.setCompoundDrawablesWithIntrinsicBounds( R.drawable.sad, 0, 0, 0);
         }
         else {
             //tzn ze pole z numerkiem -> wyswietlamy numerek
@@ -502,8 +504,11 @@ public class Play extends AppCompatActivity implements View.OnClickListener, Vie
         text_timer=findViewById(R.id.ttimer);
         String time = seconds+"."+decimals+hundredths+"s";
         text_timer.setText(getString(R.string.timer,seconds,decimals,hundredths));
+        Button r = findViewById(R.id.res_button);
+        r.setCompoundDrawablesWithIntrinsicBounds( R.drawable.grin, 0, 0, 0);
 
         //dialog pytajacy o nick przy wygranej i dostaniu sie do TOP 10 w standardowej grze
+
         final int Rank = CheckRank(score);
         if(Rank<10 && standard){
             AlertDialog.Builder alert1 = new AlertDialog.Builder(this);
